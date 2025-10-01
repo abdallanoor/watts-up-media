@@ -12,13 +12,13 @@ export default function ComingSoon() {
 
       <div className="relative z-10 container mx-auto px-6 text-center animate-fade-in">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-8 flex justify-center">
+          <div className="relative h-48 w-64 md:h-64 md:w-80 mx-auto mb-8">
             <Image
               src="/logo.png"
-              alt="Watts Up Media"
-              width={320}
-              height={80}
-              className="w-64 h-auto md:w-80 drop-shadow-2xl"
+              alt="Watts Up Media Logo"
+              fill
+              className="object-contain"
+              priority
             />
           </div>
 

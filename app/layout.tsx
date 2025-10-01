@@ -14,8 +14,29 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Watts Up Media - Coming Soon",
-  description: "Real Estate Photography & Video",
+  title: "Watts Up Media",
+  description: "Real Estate Photography & Video.",
+  keywords: [
+    "video editing",
+    "real estate video editing",
+    "real estate videos",
+    "Watts Up Media",
+    "editing services",
+  ],
+  authors: [{ name: "Watts Up Media" }],
+  openGraph: {
+    title: "Watts Up Media",
+    description: "Real Estate Photography & Video.",
+    url: "https://wattsupmedia.vercel.app",
+    images: [
+      {
+        url: "/metalogo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Watts Up Media",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
