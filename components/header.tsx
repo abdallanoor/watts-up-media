@@ -53,7 +53,7 @@ export default function Header() {
 
         <div>
           <ThemeToggle />
-          <Button className="rounded-none cursor-pointer ms-4 max-lg:hidden">
+          <Button className="rounded-none cursor-pointer ms-3 max-lg:hidden">
             Book a Shoot
           </Button>
         </div>
