@@ -12,7 +12,7 @@ export default function SectionHeader({
   description,
 }: SectionHeaderProps) {
   return (
-    <div className="text-center flex flex-col gap-3">
+    <div className="text-center flex flex-col gap-2">
       {/* <p className="text-sm font-medium">{label}</p> */}
 
       <h2 className="text-primary text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl">
