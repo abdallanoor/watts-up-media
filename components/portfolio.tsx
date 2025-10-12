@@ -328,7 +328,7 @@ const PhotoGridItem = memo<{
           loading="lazy"
           onLoad={() => setLoaded(true)}
           className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-            loaded ? "blur-0 scale-100" : "blur-md scale-105"
+            loaded ? "blur-0" : "blur-md"
           }`}
         />
       )}
