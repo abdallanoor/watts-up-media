@@ -200,7 +200,7 @@
 }
 @layer utilities {
   .container {
-    @apply mx-auto px-5 sm:border-x;
+    @apply mx-auto px-5 border-x;
     max-width: 100%;
     @media (min-width: 640px) {
       max-width: 600px;

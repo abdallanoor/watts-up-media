@@ -385,7 +385,7 @@ export default function Portfolio() {
         />
       </div>
 
-      <div className="container p-0! border-s-0!">
+      <div className="container p-0! border-x-0!">
         <div
           className="grid grid-cols-3"
           role="tablist"
