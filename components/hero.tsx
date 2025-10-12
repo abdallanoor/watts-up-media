@@ -1,6 +1,14 @@
+"use client";
+
 import { Button } from "./ui/button";
 
 export default function Hero() {
+  const scrollToSection = (href: string) => {
+    const element = document.querySelector(href);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <section
       id="hero"
@@ -39,11 +47,12 @@ export default function Hero() {
               Book a Shoot
             </Button>
             <Button
-              className="sm:w-auto rounded-none cursor-pointer shadow-none"
+              className="sm:w-auto rounded-none cursor-pointer shadow-none border-foreground! bg-background! hover:bg-foreground! hover:text-primary-foreground!"
               variant="outline"
               size="lg"
+              onClick={() => scrollToSection("#portfolio")}
             >
-              Explore our Projects
+              Explore our Portfolio
             </Button>
           </div>
         </div>

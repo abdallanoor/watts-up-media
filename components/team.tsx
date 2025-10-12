@@ -25,12 +25,13 @@ export default function Team() {
         <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l">
           {team.map((member, i) => (
             <div key={i} className="border-r">
-              <div className="aspect-[3/4] relative">
+              <div className="aspect-square">
                 <Image
-                  fill
+                  width={350}
+                  height={500}
                   src={member.image}
-                  alt={member.name}
-                  className="object-cover"
+                  alt={`Portrait of ${member.name}, ${member.role} at Watts Up Media`}
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="flex flex-col items-center justify-end p-5">
