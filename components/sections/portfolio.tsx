@@ -1,11 +1,9 @@
 "use client";
 
 import { memo, useCallback, useEffect, useRef, useState } from "react";
-import SectionHeader from "./section-header";
 import Image from "next/image";
 import { AlertCircle, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import { Button } from "./ui/button";
 import {
   NavigationDotsProps,
   ScrollCarouselProps,
@@ -13,6 +11,9 @@ import {
   VideoIframeProps,
 } from "@/types/video";
 import { portfolioItems } from "@/data";
+import SectionHeader from "@/components/section-header";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 // Constants
 const SCROLL_GAP = 16; // gap-4 in pixels
@@ -36,7 +37,7 @@ const NavigationDots = memo<NavigationDotsProps>(
           aria-label={`Go to slide ${index + 1}`}
           className={`w-2 h-2 rounded-full transition-all duration-300 ${
             index === currentIndex
-              ? "bg-primary w-5"
+              ? "bg-foreground w-5"
               : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
           }`}
         />
@@ -80,7 +81,7 @@ const VideoIframe = memo<VideoIframeProps>(({ src, className = "" }) => {
             {isLoading && (
               <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-muted/50 backdrop-blur-sm rounded-lg z-10">
                 <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-2 border-foreground border-t-transparent rounded-full animate-spin" />
                 </div>
               </div>
             )}
@@ -100,7 +101,7 @@ const VideoIframe = memo<VideoIframeProps>(({ src, className = "" }) => {
 
             <iframe
               src={iframeSrc}
-              className={`absolute inset-0 w-full h-full border-0 rounded-lg transition-opacity duration-500 ${
+              className={`absolute inset-0 w-full h-full border-0 rounded-lg transition-opacity duration-500 scheme-normal! ${
                 isLoading || hasError ? "opacity-0" : "opacity-100"
               }`}
               allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
@@ -282,29 +283,6 @@ const ScrollCarousel = memo<ScrollCarouselProps>(
 
 ScrollCarousel.displayName = "ScrollCarousel";
 
-// Tab Button Component
-const TabButton = memo<{
-  tab: { id: TabType; label: string };
-  isActive: boolean;
-  onClick: () => void;
-}>(({ tab, isActive, onClick }) => (
-  <button
-    onClick={onClick}
-    className={`cursor-pointer border border-e-0 max-md:text-xs px-2 py-5 font-medium text-sm transition-all duration-300 ${
-      isActive
-        ? "text-primary bg-secondary"
-        : "text-primary/60 hover:text-primary"
-    } ${tab.id === "photos" ? "max-sm:border-e" : ""}`}
-    role="tab"
-    aria-selected={isActive}
-    aria-controls={`${tab.id}-panel`}
-  >
-    {tab.label}
-  </button>
-));
-
-TabButton.displayName = "TabButton";
-
 // Photo Grid Item Component
 const PhotoGridItem = memo<{
   item: { src: string };
@@ -377,7 +355,7 @@ export default function Portfolio() {
 
   return (
     <section id="portfolio" className="border-b scroll-mt-16">
-      <div className="container py-10">
+      <div className="container">
         <SectionHeader
           label="Portfolio"
           title="Our Work"
@@ -385,19 +363,39 @@ export default function Portfolio() {
         />
       </div>
 
-      <div className="container p-0! border-s-0! max-md:border-e-0!">
+      <div className="container p-0! border-s-0! max-sm:border-e-0!">
         <div
           className="grid grid-cols-3"
           role="tablist"
           aria-label="Portfolio categories"
         >
-          {tabs.map((tab) => (
-            <TabButton
-              key={tab.id}
-              tab={tab}
-              isActive={activeTab === tab.id}
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
               onClick={() => handleTabChange(tab.id)}
-            />
+              className={`cursor-pointer border border-e-0 max-md:text-xs px-2 py-5 font-medium text-sm transition-all duration-300 ${
+                activeTab === tab.id
+                  ? "text-foreground bg-muted"
+                  : "text-foreground/60 hover:text-foreground"
+              } ${tab.id === "photos" ? "max-sm:border-e" : ""}`}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`${tab.id}-panel`}
+            >
+              <motion.span
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.6 }}
+                transition={{ duration: 0.45, delay: index * 0.1 }}
+                className="inline-block"
+              >
+                {tab.label}
+              </motion.span>
+            </button>
           ))}
         </div>
       </div>
@@ -450,11 +448,7 @@ export default function Portfolio() {
             {!showAllPhotos &&
               portfolioItems.photography.length > INITIAL_PHOTOS_COUNT && (
                 <div className="flex justify-center mt-6">
-                  <Button
-                    onClick={handleShowMore}
-                    size="lg"
-                    className="rounded-none cursor-pointer"
-                  >
+                  <Button onClick={handleShowMore} size="lg">
                     Show More
                   </Button>
                 </div>
