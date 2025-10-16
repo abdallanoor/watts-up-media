@@ -55,7 +55,7 @@ export default function SectionHeader({
       <motion.h2
         variants={fadeUp}
         transition={{ duration: 0.6 }}
-        className="text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl mb-2"
+        className="text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl"
       >
         {title}
       </motion.h2>
