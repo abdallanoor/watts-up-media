@@ -19,10 +19,10 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="h-screen p-2">
-      <div className="relative w-full h-full rounded-2xl overflow-hidden">
+    <section id="hero" className="h-screen">
+      <div className="relative w-full h-full overflow-hidden">
         <video
-          className="absolute inset-0 w-full h-full object-cover rounded-2xl overflow-hidden"
+          className="absolute inset-0 w-full h-full object-cover overflow-hidden"
           src="/video.mp4"
           autoPlay
           loop
