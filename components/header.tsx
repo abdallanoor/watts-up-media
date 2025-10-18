@@ -17,11 +17,14 @@ const navItems = [
 export default function Header() {
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map((item) => item.href.substring(1));
       const scrollPosition = window.scrollY + 100;
+
+      setIsScrolled(window.scrollY > 20);
 
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -86,7 +89,21 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 right-0 left-0 border-b h-16 bg-background z-50">
+      <motion.header
+        initial={{ y: -20, opacity: 0 }}
+        animate={{
+          y: 0,
+          opacity: 1,
+          backgroundColor: isScrolled ? "var(--background)" : "transparent",
+          borderBottomColor: isScrolled ? "var(--border)" : "transparent",
+          height: isScrolled ? 64 : 80,
+        }}
+        transition={{
+          duration: 0.5,
+          ease: [0.25, 0.1, 0.25, 1],
+        }}
+        className="fixed right-0 left-0 h-16 z-50 border-b"
+      >
         <div className="container border-none h-full flex items-center justify-between">
           <Image
             src="/logo.png"
@@ -95,7 +112,6 @@ export default function Header() {
             height={40}
             className="h-10 w-auto"
           />
-
           <nav className="hidden lg:flex items-center justify-center gap-2 flex-1">
             {navItems.map((item) => (
               <Button
@@ -103,11 +119,15 @@ export default function Header() {
                 variant="link"
                 size="sm"
                 onClick={() => scrollToSection(item.href)}
-                className={`hover:no-underline cursor-pointer px-2 py-1 transition-all duration-300 ${
-                  activeSection === item.href.substring(1)
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-primary"
-                }`}
+                className={`hover:no-underline cursor-pointer px-2 py-1 transition-all duration-300
+                    ${
+                      activeSection === item.href.substring(1)
+                        ? "text-primary"
+                        : isScrolled
+                        ? "text-muted-foreground hover:text-primary"
+                        : "text-[#b5ada0] hover:text-primary"
+                    }
+                  `}
               >
                 {item.name}
               </Button>
@@ -122,14 +142,16 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden rounded-full cursor-pointer hover:bg-transparent!"
+              className={`lg:hidden rounded-full cursor-pointer hover:bg-transparent! text-muted-foreground hover:text-muted-foreground ${
+                isScrolled ? "" : "text-[#b5ada0]!"
+              }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X /> : <Menu />}
             </Button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu */}
       <AnimatePresence>
@@ -141,7 +163,7 @@ export default function Header() {
             exit="closed"
             className="fixed inset-0 bg-background z-40 lg:hidden pt-16"
           >
-            <div className="container h-full flex flex-col items-center justify-center gap-8">
+            <div className="container border-none h-full flex flex-col items-center justify-center gap-8">
               {navItems.map((item, i) => (
                 <motion.div
                   key={item.name}

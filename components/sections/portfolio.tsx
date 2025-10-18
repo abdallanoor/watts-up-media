@@ -324,7 +324,7 @@ export default function Portfolio() {
   const [isMobile, setIsMobile] = useState(false);
 
   const tabs = [
-    { id: "videos" as TabType, label: "Horizontal Videos" },
+    { id: "videos" as TabType, label: "Creative Highlight Videos" },
     { id: "reels" as TabType, label: "Engagement Reels" },
     { id: "photos" as TabType, label: "Photography" },
   ];

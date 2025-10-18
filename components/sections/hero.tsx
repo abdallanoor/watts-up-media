@@ -19,7 +19,7 @@ export default function Hero() {
   };
 
   return (
-    <section id="hero" className="container h-screen px-5 pt-20 pb-5">
+    <section id="hero" className="h-screen p-2">
       <div className="relative w-full h-full rounded-2xl overflow-hidden">
         <video
           className="absolute inset-0 w-full h-full object-cover rounded-2xl overflow-hidden"

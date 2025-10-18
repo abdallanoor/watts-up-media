@@ -17,7 +17,7 @@ const services = [
     icon: Smartphone,
     title: "Agent Reels",
     description:
-      "Creative short-form videos that help agents build their personal brand and attract more clients.",
+      "We create the scripts, we coach you on where to stand, what to say and how to be confident on camera.",
     image: "/reel.png",
   },
 ];
