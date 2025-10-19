@@ -136,7 +136,17 @@ export default function Header() {
 
           <div className="flex items-center gap-0 sm:gap-1 md:gap-2">
             <ThemeToggle />
-            <Button className="max-lg:hidden">Book a Shoot</Button>
+            <Button
+              className="max-lg:hidden"
+              onClick={() => {
+                window.open(
+                  "https://listings.wattsupmedia.net/portal",
+                  "_blank"
+                );
+              }}
+            >
+              Book a Shoot
+            </Button>
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -199,7 +209,13 @@ export default function Header() {
                 <Button
                   size="lg"
                   className="px-8"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    window.open(
+                      "https://listings.wattsupmedia.net/portal",
+                      "_blank"
+                    );
+                  }}
                 >
                   Book a Shoot
                 </Button>

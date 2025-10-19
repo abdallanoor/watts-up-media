@@ -162,7 +162,16 @@ export default function Contact() {
           </ContactCard>
 
           <ContactCard title="Ready to Start?" index={2}>
-            <Button size="lg" className="w-full md:w-auto">
+            <Button
+              size="lg"
+              className="w-full md:w-auto"
+              onClick={() => {
+                window.open(
+                  "https://listings.wattsupmedia.net/portal",
+                  "_blank"
+                );
+              }}
+            >
               Book a Shoot
             </Button>
           </ContactCard>

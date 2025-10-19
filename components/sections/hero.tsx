@@ -99,7 +99,16 @@ export default function Hero() {
             transition={{ duration: 0.9 }}
             className="flex gap-4 max-md:flex-col"
           >
-            <Button size="lg" className="w-full sm:w-auto rounded-full">
+            <Button
+              size="lg"
+              className="w-full sm:w-auto rounded-full"
+              onClick={() => {
+                window.open(
+                  "https://listings.wattsupmedia.net/portal",
+                  "_blank"
+                );
+              }}
+            >
               Book a Shoot
             </Button>
             <Button
