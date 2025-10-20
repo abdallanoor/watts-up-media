@@ -1,6 +1,5 @@
 export const portfolioItems = {
   horizontal: [
-    { src: "https://player.vimeo.com/video/1128627526" },
     { src: "https://player.vimeo.com/video/1128463157" },
     { src: "https://player.vimeo.com/video/1128462969" },
     { src: "https://player.vimeo.com/video/1128463059" },
