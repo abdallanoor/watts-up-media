@@ -35,7 +35,7 @@ const NavigationDots = memo<NavigationDotsProps>(
           role="tab"
           aria-selected={index === currentIndex}
           aria-label={`Go to slide ${index + 1}`}
-          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+          className={`w-2 h-2 p-1 rounded-full transition-all duration-300 ${
             index === currentIndex
               ? "bg-foreground w-5"
               : "bg-muted-foreground/30 hover:bg-muted-foreground/50"

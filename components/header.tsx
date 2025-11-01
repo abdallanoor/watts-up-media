@@ -110,7 +110,8 @@ export default function Header() {
             alt="Watts Up Media"
             width={52}
             height={40}
-            className="h-10 w-auto"
+            onClick={() => scrollToSection("#hero")}
+            className="h-10 w-auto cursor-pointer"
           />
           <nav className="hidden lg:flex items-center justify-center gap-2 flex-1">
             {navItems.map((item) => (
@@ -152,6 +153,7 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
+              aria-label="Open menu"
               className={`lg:hidden rounded-full cursor-pointer hover:bg-transparent! text-muted-foreground hover:text-muted-foreground ${
                 isScrolled ? "" : "text-[#b5ada0]!"
               }`}
