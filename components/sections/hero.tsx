@@ -28,7 +28,7 @@ export default function Hero() {
           >
             <iframe
               src="https://player.vimeo.com/video/1132779126?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
-              className="absolute top-0 left-0 w-full h-full bg-black!"
+              className="absolute top-0 left-0 w-full h-full bg-black! scheme-normal!"
               style={{ border: "none" }}
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
