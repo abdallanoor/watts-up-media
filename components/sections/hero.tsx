@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-// import { Sparkles } from "lucide-react";
 
 export default function Hero() {
   const fadeUp = {
@@ -21,34 +20,32 @@ export default function Hero() {
   return (
     <section id="hero" className="h-screen">
       <div className="relative w-full h-full overflow-hidden">
-        <video
-          className="absolute inset-0 w-full h-full object-cover overflow-hidden"
-          src="/video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
+        {/* Vimeo Background */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden">
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
+            style={{ width: "177.77vh", height: "56.25vw" }}
+          >
+            <iframe
+              src="https://player.vimeo.com/video/1132779126?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
+              className="absolute top-0 left-0 w-full h-full bg-black!"
+              style={{ border: "none" }}
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
 
+        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/60" />
 
+        {/* Hero Content */}
         <motion.div
           className="relative z-10 flex flex-col items-center justify-center h-full px-6 md:px-12"
           initial="hidden"
           animate="visible"
           transition={{ staggerChildren: 0.2 }}
         >
-          {/* <motion.div
-            variants={fadeUp}
-            transition={{ duration: 0.6 }}
-            className="flex items-center gap-2 mb-8 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20"
-          >
-            <Sparkles size={14} className="text-white/90" />
-            <span className="text-sm font-medium text-white/90">
-              Your Luxury Partner
-            </span>
-          </motion.div> */}
-
           <motion.h1
             variants={fadeUp}
             transition={{ duration: 0.6 }}
@@ -100,7 +97,7 @@ export default function Hero() {
             <Button
               onClick={() => scrollToSection("#portfolio")}
               size="lg"
-              className="w-full sm:w-auto bg-white/10 text-white border border-white/20 backdrop-blur-sm hover:bg-white/15"
+              className="w-full sm:w-auto bg-white/15 text-white  hover:bg-white/20"
             >
               View Portfolio
             </Button>
