@@ -70,7 +70,7 @@ export default function Services() {
               <motion.div
                 variants={fadeUp}
                 custom={0.4 + i * 0.3}
-                className="mt-8 relative mx-auto w-[90%] max-w-md mask-b-from-75%"
+                className="mt-8 relative mx-auto w-[90%] max-w-md mask-b-from-80%"
               >
                 <div className="relative aspect-[4/3] w-full">
                   <Image
@@ -80,6 +80,7 @@ export default function Services() {
                     className="object-cover"
                     priority
                   />
+                  <div className="absolute -bottom-1 left-0 w-full h-[5px] bg-background z-10" />
                 </div>
               </motion.div>
             </motion.div>
