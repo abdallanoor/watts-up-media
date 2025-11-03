@@ -20,21 +20,17 @@ export default function Hero() {
   return (
     <section id="hero" className="h-screen">
       <div className="relative w-full h-full overflow-hidden">
-        {/* Vimeo Background */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto"
-            style={{ width: "177.77vh", height: "56.25vw" }}
-          >
-            <iframe
-              src="https://player.vimeo.com/video/1132779126?background=1&autoplay=1&loop=1&byline=0&title=0&muted=1"
-              className="absolute top-0 left-0 w-full h-full bg-black! scheme-normal!"
-              style={{ border: "none" }}
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/video.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        >
+          {"Your browser does not support the video tag."}
+        </video>
 
         {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black/60" />
