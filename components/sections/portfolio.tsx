@@ -18,7 +18,6 @@ import { motion } from "framer-motion";
 // Constants
 const SCROLL_GAP = 16; // gap-4 in pixels
 const INITIAL_PHOTOS_COUNT = 6;
-const VIDEO_QUALITY = "360p";
 
 // Navigation Dots Component
 const NavigationDots = memo<NavigationDotsProps>(
@@ -54,7 +53,7 @@ const VideoIframe = memo<VideoIframeProps>(({ src, className = "" }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  const iframeSrc = `${src}?autoplay=0&loop=0&muted=0&controls=1&portrait=0&title=0&byline=0&background=0&responsive=1&quality=${VIDEO_QUALITY}&playsinline=1&cast=0&chromecast=0`;
+  const iframeSrc = `${src}?autoplay=0&loop=0&muted=0&controls=1&portrait=0&title=0&byline=0&background=0&responsive=1&playsinline=1&cast=0&chromecast=0`;
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);
