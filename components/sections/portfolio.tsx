@@ -2,8 +2,7 @@
 
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AlertCircle, ChevronLeft, ChevronRight, Play } from "lucide-react";
-import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
+import { AlertCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   NavigationDotsProps,
   ScrollCarouselProps,
@@ -49,70 +48,40 @@ NavigationDots.displayName = "NavigationDots";
 
 // Video Iframe Component
 const VideoIframe = memo<VideoIframeProps>(({ src, className = "" }) => {
-  const { ref, hasIntersected } = useIntersectionObserver();
-  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   const iframeSrc = `${src}?autoplay=0&loop=0&muted=0&controls=1&portrait=0&title=0&byline=0&background=0&responsive=1&playsinline=1&cast=0&chromecast=0`;
 
-  const handleLoad = useCallback(() => {
-    setIsLoading(false);
-  }, []);
-
   const handleError = useCallback(() => {
-    setIsLoading(false);
     setHasError(true);
   }, []);
 
   return (
-    <div ref={ref} className={`relative w-full h-full ${className}`}>
+    <div className={`relative w-full h-full ${className}`}>
       <div className="absolute inset-0 w-full h-full">
-        {!hasIntersected ? (
-          <div className="w-full h-full flex items-center justify-center bg-muted/50 rounded-lg">
+        {hasError && (
+          <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-muted/50 rounded-lg z-10">
             <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-2 bg-muted/70 rounded-full flex items-center justify-center">
-                <Play size={24} className="text-muted-foreground" />
+              <div className="w-12 h-12 mx-auto mb-2 bg-destructive/20 rounded-full flex items-center justify-center">
+                <AlertCircle size={24} className="text-destructive" />
               </div>
+              <span className="text-xs text-destructive">
+                Failed to load video
+              </span>
             </div>
           </div>
-        ) : (
-          <>
-            {isLoading && (
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-muted/50 backdrop-blur-sm rounded-lg z-10">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-8 h-8 border-2 border-foreground border-t-transparent rounded-full animate-spin" />
-                </div>
-              </div>
-            )}
-
-            {hasError && (
-              <div className="absolute inset-0 w-full h-full flex items-center justify-center bg-muted/50 rounded-lg z-10">
-                <div className="text-center">
-                  <div className="w-12 h-12 mx-auto mb-2 bg-destructive/20 rounded-full flex items-center justify-center">
-                    <AlertCircle size={24} className="text-destructive" />
-                  </div>
-                  <span className="text-xs text-destructive">
-                    Failed to load video
-                  </span>
-                </div>
-              </div>
-            )}
-
-            <iframe
-              src={iframeSrc}
-              className={`absolute inset-0 w-full h-full border-0 rounded-lg transition-opacity duration-500 scheme-normal! ${
-                isLoading || hasError ? "opacity-0" : "opacity-100"
-              }`}
-              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-              allowFullScreen
-              loading="lazy"
-              title="Video content"
-              onLoad={handleLoad}
-              onError={handleError}
-              sandbox="allow-scripts allow-same-origin allow-presentation"
-            />
-          </>
         )}
+
+        <iframe
+          src={iframeSrc}
+          className="absolute inset-0 w-full h-full border-0 rounded-lg scheme-normal!"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+          allowFullScreen
+          loading="lazy"
+          title="Video content"
+          onError={handleError}
+          sandbox="allow-scripts allow-same-origin allow-presentation"
+        />
       </div>
     </div>
   );
@@ -286,29 +255,21 @@ ScrollCarousel.displayName = "ScrollCarousel";
 const PhotoGridItem = memo<{
   item: { src: string };
   index: number;
-  hasIntersected: boolean;
-}>(({ item, index, hasIntersected }) => {
-  const [loaded, setLoaded] = useState(false);
-
+}>(({ item, index }) => {
   return (
     <div
       className={`overflow-hidden rounded-lg bg-muted/30 max-md:aspect-[3/2] ${
         index === 0 ? "md:col-span-2 md:row-span-2" : "aspect-[3/2]"
       }`}
     >
-      {hasIntersected && (
-        <Image
-          src={item.src}
-          alt={`Portfolio item ${index + 1}`}
-          width={600}
-          height={400}
-          loading="lazy"
-          onLoad={() => setLoaded(true)}
-          className={`w-full h-full object-cover transition-all duration-700 ease-out ${
-            loaded ? "blur-0" : "blur-md"
-          }`}
-        />
-      )}
+      <Image
+        src={item.src}
+        alt={`Portfolio item ${index + 1}`}
+        width={600}
+        height={400}
+        loading="lazy"
+        className="w-full h-full object-cover"
+      />
     </div>
   );
 });
@@ -318,7 +279,6 @@ PhotoGridItem.displayName = "PhotoGridItem";
 // Main Portfolio Component
 export default function Portfolio() {
   const [activeTab, setActiveTab] = useState<TabType>("videos");
-  const { ref, hasIntersected } = useIntersectionObserver();
   const [showAllPhotos, setShowAllPhotos] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -400,60 +360,61 @@ export default function Portfolio() {
       </div>
 
       <div className="container py-5">
-        {activeTab === "videos" && (
-          <div role="tabpanel" id="videos-panel" aria-labelledby="videos-tab">
-            <ScrollCarousel
-              type="horizontal"
-              videos={portfolioItems.horizontal}
-            />
-          </div>
-        )}
+        <div
+          role="tabpanel"
+          id="videos-panel"
+          aria-labelledby="videos-tab"
+          className={activeTab === "videos" ? "block" : "hidden"}
+        >
+          <ScrollCarousel
+            type="horizontal"
+            videos={portfolioItems.horizontal}
+          />
+        </div>
 
-        {activeTab === "reels" && (
-          <div role="tabpanel" id="reels-panel" aria-labelledby="reels-tab">
-            {isMobile ? (
-              <ScrollCarousel
-                type="vertical"
-                videos={portfolioItems.vertical}
-              />
-            ) : (
-              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                {portfolioItems.vertical.map((item, i) => (
-                  <div
-                    key={`reel-${i}`}
-                    className="aspect-[9/16] relative overflow-hidden rounded-lg"
-                  >
-                    <VideoIframe src={item.src} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {activeTab === "photos" && (
-          <div role="tabpanel" id="photos-panel" aria-labelledby="photos-tab">
-            <div ref={ref} className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {photosToShow.map((item, index) => (
-                <PhotoGridItem
-                  key={`photo-${index}`}
-                  item={item}
-                  index={index}
-                  hasIntersected={hasIntersected}
-                />
+        <div
+          role="tabpanel"
+          id="reels-panel"
+          aria-labelledby="reels-tab"
+          className={activeTab === "reels" ? "block" : "hidden"}
+        >
+          {isMobile ? (
+            <ScrollCarousel type="vertical" videos={portfolioItems.vertical} />
+          ) : (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {portfolioItems.vertical.map((item, i) => (
+                <div
+                  key={`reel-${i}`}
+                  className="aspect-[9/16] relative overflow-hidden rounded-lg"
+                >
+                  <VideoIframe src={item.src} />
+                </div>
               ))}
             </div>
+          )}
+        </div>
 
-            {!showAllPhotos &&
-              portfolioItems.photography.length > INITIAL_PHOTOS_COUNT && (
-                <div className="flex justify-center mt-6">
-                  <Button onClick={handleShowMore} size="lg">
-                    Show More
-                  </Button>
-                </div>
-              )}
+        <div
+          role="tabpanel"
+          id="photos-panel"
+          aria-labelledby="photos-tab"
+          className={activeTab === "photos" ? "block" : "hidden"}
+        >
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {photosToShow.map((item, index) => (
+              <PhotoGridItem key={`photo-${index}`} item={item} index={index} />
+            ))}
           </div>
-        )}
+
+          {!showAllPhotos &&
+            portfolioItems.photography.length > INITIAL_PHOTOS_COUNT && (
+              <div className="flex justify-center mt-6">
+                <Button onClick={handleShowMore} size="lg">
+                  Show More
+                </Button>
+              </div>
+            )}
+        </div>
       </div>
     </section>
   );
