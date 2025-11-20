@@ -10,6 +10,7 @@ export const portfolioItems = {
   ],
   vertical: [
     { src: "https://player.vimeo.com/video/1128463127" },
+    { src: "https://player.vimeo.com/video/1138973850" },
     { src: "https://player.vimeo.com/video/1128463007" },
     { src: "https://player.vimeo.com/video/1128463097" },
     { src: "https://player.vimeo.com/video/1128462786" },
